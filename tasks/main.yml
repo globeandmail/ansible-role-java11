@@ -1,0 +1,22 @@
+---
+- name: Install GPG key for AdoptOpenJDK
+  apt_key:
+    url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    state: present
+
+- name: Add AdoptOpenJDK Repository
+  apt_repository:
+    repo: https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+    state: present
+
+- name: Install AdoptOpenJDK 11
+  apt:
+    name: adoptopenjdk-11-hotspot
+    state: present
+    update_cache: yes
+
+# - name: Symlink /usr/java to AdoptOpenJDK installation directory
+#   file:
+#     src: 
+#     dest: /usr/java
+#     state: link
