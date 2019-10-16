@@ -1,0 +1,7 @@
+# to parse out the URL for the latest release, run the following Curl & JQ:
+#   curl -s "https://api.adoptopenjdk.net/v2/latestAssets/releases/openjdk11?os=linux&arch=x64&heap_size=normal&openjdk_impl=hotspot" | jq -r '.[] | select(.binary_type == "jdk") | .["binary_link"]'
+# As of this writing, the URL is ...
+java11_src_url: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%2B11/OpenJDK11U-jdk_x64_linux_hotspot_11.0.4_11.tar.gz"
+java11_owner: root
+java11_group: root
+java11_dest: /usr/java

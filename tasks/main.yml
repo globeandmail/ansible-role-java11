@@ -1,22 +1,29 @@
 ---
-- name: Install GPG key for AdoptOpenJDK
-  apt_key:
-    url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
-    state: present
+- name: Download & Install AdoptOpenJDK 11
+  unarchive:
+    remote_src: yes
+    src: "{{ java11_src_url }}"
+    dest: "{{ java11_dest | dirname | regex_replace('^/([^/]+)/.*$', '\\1') }}"
+    owner: "{{ java11_owner }}"
+    group: "{{ java11_group | default(java11_owner) }}"
 
-- name: Add AdoptOpenJDK Repository
-  apt_repository:
-    repo: https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-    state: present
+- name: Learn installation directory
+  shell: ls -1trd /usr/jdk-11*|tail -n1
+  register: jdk_inst_dir
 
-- name: Install AdoptOpenJDK 11
-  apt:
-    name: adoptopenjdk-11-hotspot
-    state: present
-    update_cache: yes
+- name: Symlink {{java11_dest}} to AdoptOpenJDK installation directory
+  file:
+    src: "{{jdk_inst_dir.stdout}}"
+    dest: "{{ java11_dest }}"
+    state: link
 
-# - name: Symlink /usr/java to AdoptOpenJDK installation directory
-#   file:
-#     src: 
-#     dest: /usr/java
-#     state: link
+- name: Add {{java11_dest}} as JAVA_HOME to /etc/profile.d/java-11-openjdk.sh
+  blockinfile:
+    path: "/etc/profile.d/java-11-openjdk.sh"
+    create: yes
+    owner: "{{ java11_owner }}"
+    group: "{{ java11_group | default(java11_owner) }}"
+    marker: "# {mark} java11 include (ansible managed)"
+    block: |
+      JAVA_HOME="{{ java11_dest }}"
+      PATH="${JAVA_HOME}/bin:${PATH}"
