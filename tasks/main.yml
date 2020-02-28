@@ -27,3 +27,9 @@
     block: |
       JAVA_HOME="{{ java11_dest }}"
       PATH="${JAVA_HOME}/bin:${PATH}"
+
+- name: "Update /usr/bin/java symlink to point to Java11"
+  file:
+    path: /usr/bin/java
+    src: "{{ java11_dest }}/bin/java"
+    state: link
