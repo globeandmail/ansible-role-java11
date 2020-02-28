@@ -6,7 +6,7 @@
     dest: "{{ java11_dest | dirname | regex_replace('^/([^/]+)/.*$', '\\1') }}"
     owner: "{{ java11_owner }}"
     group: "{{ java11_group | default(java11_owner) }}"
-    creates: "{{ java11_dest | dirname | regex_replace('^/([^/]+)/.*$', '\\1') }}/bin/java"
+    creates: "{{ java11_dest }}/bin/java"
 
 - name: Download & Force (Re)Install AdoptOpenJDK 11
   unarchive:
