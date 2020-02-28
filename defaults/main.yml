@@ -5,3 +5,4 @@ java11_src_url: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/dow
 java11_owner: root
 java11_group: root
 java11_dest: /usr/java
+java11_reinstall: False
