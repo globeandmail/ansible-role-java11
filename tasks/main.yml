@@ -26,6 +26,7 @@
     src: "{{jdk_inst_dir.stdout}}"
     dest: "{{ java11_dest }}"
     state: link
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Add {{java11_dest}} as JAVA_HOME to /etc/profile.d/java-11-openjdk.sh
   blockinfile:
@@ -43,3 +44,4 @@
     path: /usr/bin/java
     src: "{{ java11_dest }}/bin/java"
     state: link
+  ignore_errors: "{{ ansible_check_mode }}"
