@@ -6,3 +6,7 @@ java11_owner: root
 java11_group: root
 java11_dest: /usr/java
 java11_reinstall: False
+
+java_type: adopt-open-jdk-11
+java_corretto_remote_deb: "https://nexus.theglobeandmail.com/repository/tgam-ops-releases/com/theglobeandmail/OpenJDK/amazon-corretto/deb/11/java-11-amazon-corretto-jdk_11.0.8.10-1_amd64.deb"
+java_corretto_local_deb: "/vagrant/local-files/java-11-amazon-corretto-jdk_11.0.8.10-1_amd64.deb"
