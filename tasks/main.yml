@@ -1,4 +1,12 @@
 ---
 
+- name: Install APT Packages
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop:
+    - name: java-common
+      state: present
+
 - name: Deploy type of JAVA
   include_tasks: "{{ java_type }}/main.yml"
