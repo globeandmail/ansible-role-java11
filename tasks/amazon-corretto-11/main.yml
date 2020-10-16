@@ -1,20 +1,20 @@
 ---
 
 ## JAVA
-- name: Check if java is installed
+- name: Fetch Java version
   command: java -version
   register: java_result
-  ignore_errors: true
+  ignore_errors: True
 
 - block:
-  - name: Install JAVA deb file (non-local)
+  - name: Install JAVA deb file - remote
     apt:
       deb: "{{ java_corretto_remote_deb }}"
-    when: not use_Local
+    when: not use_Local|bool
 
-  - name: Install JAVA deb file (local)
+  - name: Install JAVA deb file - local
     apt:
       deb: "{{ java_corretto_local_deb }}"
-    when: use_Local
+    when: use_Local|bool
 
-  when: java_result|bool is failed or force_java|bool
+  when: java_result is failed or force_java|bool
